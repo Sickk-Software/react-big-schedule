@@ -80,7 +80,7 @@ function HeaderView({ schedulerData, nonAgendaCellHeaderTemplateResolver }) {
         return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
       }
 
-      if (cellUnit === CellUnit.Week) {
+      if (cellUnit === CellUnit.Day) {
         const topDivStyle = isCurrentDate ? { color: '#5767F1' } : {}
         const bottomDivStyle = isCurrentDate ? { color: '#5767F1' } : {}
 

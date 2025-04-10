@@ -85,7 +85,7 @@ function HeaderView(_ref) {
       if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
         return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style);
       }
-      if (cellUnit === _default2.CellUnit.Week) {
+      if (cellUnit === _default2.CellUnit.Day) {
         var topDivStyle = isCurrentDate ? {
           color: '#5767F1'
         } : {};
