@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
+var _react = _interopRequireDefault(require("react"));
 var _default2 = require("../config/default");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 /* eslint-disable no-nested-ternary */
@@ -64,6 +64,7 @@ function HeaderView(_ref) {
   } else {
     headerList = headers.map(function (item, index) {
       var datetime = localeDayjs(new Date(item.time));
+      var isCurrentDate = datetime.isSame(localeDayjs(), 'day');
       style = item.nonWorkingTime ? {
         width: cellWidth,
         color: config.nonWorkingTimeHeadColor,
@@ -71,16 +72,42 @@ function HeaderView(_ref) {
       } : {
         width: cellWidth
       };
-      if (index === headers.length - 1) style = item.nonWorkingTime ? {
-        color: config.nonWorkingTimeHeadColor,
-        backgroundColor: config.nonWorkingTimeHeadBgColor
-      } : {};
+      if (index === headers.length - 1) {
+        style = item.nonWorkingTime ? {
+          color: config.nonWorkingTimeHeadColor,
+          backgroundColor: config.nonWorkingTimeHeadBgColor
+        } : {};
+      }
       var cellFormat = cellUnit === _default2.CellUnit.Week ? config.nonAgendaWeekCellHeaderFormat : cellUnit === _default2.CellUnit.Month ? config.nonAgendaMonthCellHeaderFormat : cellUnit === _default2.CellUnit.Year ? config.nonAgendaYearCellHeaderFormat : config.nonAgendaOtherCellHeaderFormat;
       var pFormattedList = cellFormat.split('|').map(function (dateFormatPart) {
         return datetime.format(dateFormatPart);
       });
       if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
         return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style);
+      }
+      if (cellUnit === _default2.CellUnit.Week) {
+        var topDivStyle = isCurrentDate ? {
+          color: '#5767F1'
+        } : {};
+        var bottomDivStyle = isCurrentDate ? {
+          color: '#5767F1'
+        } : {};
+        return /*#__PURE__*/_react["default"].createElement("th", {
+          key: "header-".concat(item.time),
+          className: "header3-text",
+          style: style
+        }, /*#__PURE__*/_react["default"].createElement("div", {
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2px'
+          }
+        }, /*#__PURE__*/_react["default"].createElement("div", {
+          style: topDivStyle
+        }, datetime.format('M/D')), /*#__PURE__*/_react["default"].createElement("div", {
+          style: bottomDivStyle
+        }, datetime.format('ddd'))));
       }
       var pList = pFormattedList.map(function (formattedItem, pIndex) {
         return /*#__PURE__*/_react["default"].createElement("div", {
